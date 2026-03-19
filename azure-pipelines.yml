@@ -5,12 +5,6 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - task: CopyFiles@2
-    inputs:
-      SourceFolder: 'quickstarts/microsoft.web/webapp-linux-managed-mysql/'
-      Contents: '**'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
   - task: AzureResourceManagerTemplateDeployment@3
     inputs:
       deploymentScope: 'Resource Group'
@@ -20,9 +14,10 @@ steps:
       resourceGroupName: 'ARMPipelinesLAMP-rg'
       location: 'westeurope'
       templateLocation: 'Linked artifact'
-      csmFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.json'
-      csmParametersFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.parameters.json'
+      csmFile: 'azuredeploy.json'
+      csmParametersFile: 'azuredeploy.parameters.json'
       overrideParameters: >
         -siteName $(siteName)
         -administratorLogin $(administratorLogin)
         -administratorLoginPassword $(administratorLoginPassword)
+
