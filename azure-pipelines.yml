@@ -1,23 +1,16 @@
-trigger:
-  - none
-
-pool:
-  vmImage: 'ubuntu-latest'
-
-steps:
-  - task: AzureResourceManagerTemplateDeployment@3
-    inputs:
-      deploymentScope: 'Resource Group'
-      ConnectedServiceNameARM: 'AzureServiceConnection'
-      subscriptionId: '7a3df249-1259-4663-9647-9977f5f412ed'
-      action: 'Create Or Update Resource Group'
-      resourceGroupName: 'ARMPipelinesLAMP-rg'
-      location: 'westeurope'
-      templateLocation: 'Linked artifact'
-      csmFile: 'azuredeploy.json'
-      csmParametersFile: 'azuredeploy.parameters.json'
-      overrideParameters: >
-        -siteName $(siteName)
-        -administratorLogin $(administratorLogin)
-        -administratorLoginPassword $(administratorLoginPassword)
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'AzureServiceConnection'
+    subscriptionId: '7a3df249-1259-4663-9647-9977f5f412ed'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'ARMPipelinesLAMP-rg'
+    location: 'westeurope'
+    templateLocation: 'Linked artifact'
+    csmFile: 'azuredeploy.json'
+    csmParametersFile: 'azuredeploy.parameters.json'
+    overrideParameters: >
+      -siteName $(siteName)
+      -administratorLogin $(administratorLogin)
+      -administratorLoginPassword $(administratorLoginPassword)
 
