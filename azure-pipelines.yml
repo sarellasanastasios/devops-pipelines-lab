@@ -14,13 +14,15 @@ steps:
   - task: AzureResourceManagerTemplateDeployment@3
     inputs:
       deploymentScope: 'Resource Group'
-      azureResourceManagerConnection: '<your-resource-manager-connection>'
-      subscriptionId: '<your-subscription-id>'
+      ConnectedServiceNameARM: 'AzureServiceConnection'
+      subscriptionId: '7a3df249-1259-4663-9647-9977f5f412ed'
       action: 'Create Or Update Resource Group'
       resourceGroupName: 'ARMPipelinesLAMP-rg'
-      location: '<your-closest-location>'
+      location: 'westeurope'
       templateLocation: 'Linked artifact'
       csmFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.json'
       csmParametersFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.parameters.json'
-      overrideParameters: '-siteName $(siteName) -administratorLogin $(administratorLogin) -administratorLoginPassword $(administratorLoginPassword)'
-      deploymentMode: 'Incremental'
+      overrideParameters: >
+        -siteName $(siteName)
+        -administratorLogin $(administratorLogin)
+        -administratorLoginPassword $(administratorLoginPassword)
