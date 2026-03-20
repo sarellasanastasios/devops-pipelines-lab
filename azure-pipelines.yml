@@ -8,7 +8,7 @@ steps:
   # Βήμα 8 – Αντιγραφή των ARM templates στο artifact staging directory
   - task: CopyFiles@2
     inputs:
-      SourceFolder: 'quickstarts/microsoft.web/webapp-linux/'
+      SourceFolder: '$(Build.SourceDirectory)/quickstarts/microsoft.web/webapp-linux'
       Contents: '**'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
