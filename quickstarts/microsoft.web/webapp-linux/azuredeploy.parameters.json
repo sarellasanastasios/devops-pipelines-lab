@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "siteName": {
-      "value": "mywebappdemo12345"
+      "value": "webapp-anastasios-001"
     }
   }
 }
