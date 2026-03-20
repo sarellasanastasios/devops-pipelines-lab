@@ -22,8 +22,9 @@ steps:
     resourceGroupName: 'ARMPipelinesLAMP-rg'
     location: 'westeurope'
     templateLocation: 'Linked artifact'
-    csmFile: '$(Build.ArtifactStagingDirectory)/quickstarts/microsoft.web/webapp-linux/azuredeploy.json'
-    csmParametersFile: '$(Build.ArtifactStagingDirectory)/quickstarts/microsoft.web/webapp-linux/azuredeploy.parameters.json'
+    csmFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.json'
+    csmParametersFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.parameters.json'
     overrideParameters: '-siteName $(siteName)'
     deploymentMode: 'Incremental'
+
 
