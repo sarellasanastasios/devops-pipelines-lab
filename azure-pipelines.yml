@@ -5,6 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- checkout: self
   # Βήμα 8 – Αντιγραφή των ARM templates στο artifact staging directory
   - task: CopyFiles@2
     inputs:
