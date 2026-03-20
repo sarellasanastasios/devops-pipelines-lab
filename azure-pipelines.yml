@@ -5,25 +5,28 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - checkout: self
-  # Βήμα 8 – Αντιγραφή των ARM templates στο artifact staging directory
-  - task: CopyFiles@2
-    inputs:
-      SourceFolder: '$(Build.SourcesDirectory)/quickstarts/microsoft.web/webapp-linux'
-      Contents: '**'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+- checkout: self
 
-  # Βήμα 9 – Deployment στο Azure
-  - task: AzureResourceManagerTemplateDeployment@3
-    inputs:
-      deploymentScope: 'Resource Group'
-      azureResourceManagerConnection: 'AzureServiceConnection'
-      subscriptionId: '7a3df249-1259-4663-9647-9977f5f412ed'
-      action: 'Create Or Update Resource Group'
-      resourceGroupName: 'ARMPipelinesLAMP-rg'
-      location: 'westeurope'
-      templateLocation: 'Linked artifact'
-      csmFile: '$(Build.ArtifactStagingDirectory)/quickstarts/microsoft.web/webapp-linux/azuredeploy.json'
-      csmParametersFile: '$(Build.ArtifactStagingDirectory)/quickstarts/microsoft.web/webapp-linux/azuredeploy.parameters.json'
-      overrideParameters: '-siteName $(siteName)'
-      deploymentMode: 'Incremental'
+# Βήμα 8 – Αντιγραφή των ARM templates στο artifact staging directory
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/quickstarts/microsoft.web/webapp-linux'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+# Βήμα 9 – Deployment στο Azure
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'AzureServiceConnection'
+    subscriptionId: '7a3df249-1259-4663-9647-9977f5f412ed'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'ARMPipelinesLAMP-rg'
+    location: 'westeurope'
+    templateLocation: 'Linked artifact'
+    csmFile: '$(Build.ArtifactStagingDirectory)/quickstarts/microsoft.web/webapp-linux/azuredeploy.json'
+    csmParametersFile: '$(Build.ArtifactStagingDirectory)/quickstarts/microsoft.web/webapp-linux/azuredeploy.parameters.json'
+    overrideParameters: '-siteName $(siteName)'
+    deploymentMode: 'Incremental'
+
+      
