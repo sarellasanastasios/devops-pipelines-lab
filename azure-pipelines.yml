@@ -5,8 +5,14 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - checkout: self
+  # Βήμα 8 – Αντιγραφή των ARM templates στο artifact staging directory
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: 'quickstarts/microsoft.web/webapp-linux-managed-mysql/'
+      Contents: '**'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
+  # Βήμα 9 – Deployment στο Azure
   - task: AzureResourceManagerTemplateDeployment@3
     inputs:
       deploymentScope: 'Resource Group'
@@ -16,10 +22,7 @@ steps:
       resourceGroupName: 'ARMPipelinesLAMP-rg'
       location: 'westeurope'
       templateLocation: 'Linked artifact'
-      csmFile: 'azuredeploy.json'
-      csmParametersFile: 'azuredeploy.parameters.json'
-      overrideParameters: >
-        -siteName $(siteName)
-        -administratorLogin $(administratorLogin)
-        -administratorLoginPassword $(administratorLoginPassword)
-
+      csmFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.json'
+      csmParametersFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.parameters.json'
+      overrideParameters: '-siteName $(siteName) -administratorLogin $(administratorLogin) -administratorLoginPassword $(administratorLoginPassword)'
+      deploymentMode: 'Incremental'
