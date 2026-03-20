@@ -7,14 +7,12 @@ pool:
 steps:
 - checkout: self
 
-# Βήμα 8 – Αντιγραφή των ARM templates στο artifact staging directory
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)/quickstarts/microsoft.web/webapp-linux'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-# Βήμα 9 – Deployment στο Azure
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
@@ -29,4 +27,3 @@ steps:
     overrideParameters: '-siteName $(siteName)'
     deploymentMode: 'Incremental'
 
-      
