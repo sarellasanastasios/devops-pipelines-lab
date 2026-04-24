@@ -10,5 +10,5 @@ spec:
   ports: 
     - protocol: TCP
       port: 80
-      #Στο server.js υπάρχει το app.listen(3000) άρα το container moy ako;yei sto 3000
-      targetPort: 3000
+      #Στο server.js υπάρχει το app.listen(3000) άρα το container μου ακούει στο 8080
+      targetPort: 8080
