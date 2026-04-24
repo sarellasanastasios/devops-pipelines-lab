@@ -9,6 +9,6 @@ spec:
     #Στις γραμμές 10,12,14 αν δεν βάζαμε το - protocol:TCP θα ήταν το ίδιο, γιατί το Kubernetes θεωρεί: protocol: TCP αλλά καλό είναι να το βάζουμε 
   ports: 
     - protocol: TCP
-      port: 80
+      port: 8080
       #Στο server.js υπάρχει το app.listen(3000) άρα το container μου ακούει στο 8080
       targetPort: 8080
