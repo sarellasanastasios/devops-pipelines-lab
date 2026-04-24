@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: multi-app-ingress
   namespace: default
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
@@ -24,4 +22,5 @@ spec:
             name: myapp-service
             port:
               number: 8080
+
 
