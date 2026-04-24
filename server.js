@@ -1,10 +1,11 @@
-const http = require('http');
+const express = require('express');
+const app = express();
 
-const server = http.createServer((req, res) => {
-  res.end('Hello from Docker + GitHub Actions + ACR!');
+app.get('/', (req, res) => {
+  res.send('Hello from Docker + GitHub Actions + ACR!');
 });
 
-server.listen(8080, () => {
+app.listen(8080, () => {
   console.log('Server running on port 8080');
 });
 
