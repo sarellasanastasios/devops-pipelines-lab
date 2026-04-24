@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp-deployment
+  name: devopsapp-deployment
   labels:
-    app: myapp
+    app: devopsapp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: myapp
+      app: devopsapp
   template:
     metadata:
       labels:
-        app: myapp
+        app: devopsapp
     spec:
       containers:
-        - name: myapp
-          image: myacr11047.azurecr.io/myapp:latest
+        - name: devopsapp
+          image: myacr11047.azurecr.io/devopsapp:latest
           ports:
             - containerPort: 3000
 
