@@ -6,7 +6,7 @@ spec:
   type: LoadBalancer
   selector:
     app: devopsapp
-    #Στις γραμμές 10,12,13 αν δεν βάζαμε το - protocol:TCP θα ήταν το ίδιο, γιατί το Kubernetes θεωρεί: protocol: TCP αλλά καλό είναι να το βάζουμε 
+    #Στις γραμμές 10,12,14 αν δεν βάζαμε το - protocol:TCP θα ήταν το ίδιο, γιατί το Kubernetes θεωρεί: protocol: TCP αλλά καλό είναι να το βάζουμε 
   ports: 
     - protocol: TCP
       port: 80
