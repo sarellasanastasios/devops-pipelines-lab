@@ -19,5 +19,5 @@ spec:
         - name: devopsapp
           image: myacr11047.azurecr.io/devopsapp:latest
           ports:
-            - containerPort: 3000
+            - containerPort: 8080
 
