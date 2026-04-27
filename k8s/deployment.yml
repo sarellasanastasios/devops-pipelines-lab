@@ -16,8 +16,12 @@ spec:
         app: devopsapp
     spec:
       containers:
-        - name: devopsapp
-          image: myacr11047.azurecr.io/devopsapp:latest
-          ports:
-            - containerPort: 8080
+  - name: devopsapp
+    image: myacr11047.azurecr.io/devopsapp:latest
+    ports:
+      - containerPort: 8080
+    env:
+      - name: PORT
+        value: "8080"
+
 
