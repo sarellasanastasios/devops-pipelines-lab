@@ -10,7 +10,7 @@ env:
   ACR_NAME: myacr11047
   IMAGE_NAME: devopsapp
   AKS_RESOURCE_GROUP: myContainerRG
-  AKS_CLUSTER_NAME: myapp
+  AKS_CLUSTER_NAME: myapp-public
 
 jobs:
   build-and-push:
