@@ -8,7 +8,7 @@ on:
 
 permissions:
   id-token: write  #Το χρησιμοποιώ όταν θέλω να κάνω OIDC στο Azure, το azure/login@v3 δεν μπορεί να ζητήσει OIDC login token, επίσης το Azure δεν μπορεί να εκδώσει federated token
-  contents: read
+  contents: read   #Μπορεί να διαβάσει αρχεία, και το workflow μπορεί να κάνει checkout
 
 jobs:
   build-and-push:
