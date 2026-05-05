@@ -7,7 +7,7 @@ on:
       - main
 
 permissions:
-  id-token: write
+  id-token: write  #Το χρησιμοποιώ όταν θέλω να κάνω OIDC στο Azure, το azure/login@v3 δεν μπορεί να ζητήσει OIDC login στο Azure
   contents: read
 
 jobs:
