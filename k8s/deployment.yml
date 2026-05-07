@@ -8,7 +8,7 @@ metadata:
   labels:
     app: devopsapp
 spec:
-  replicas: 1
+  replicas: 1  #Θέλω να τρέχει 1 Pod από αυτή την εφαρμογή, εφόσον έχω ένα container
   selector:
     matchLabels:
       app: devopsapp
