@@ -1,3 +1,5 @@
+#YAML configuration για Kubernetes
+#Το deployment.yml είναι το αρχείο που εφαρμόζω στο AKS
 #Aυτό είναι συμβατό για AKS,ACR,GitHub Actions
 apiVersion: apps/v1
 kind: Deployment
