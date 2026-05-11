@@ -76,6 +76,7 @@ jobs:
         run: |
           kubectl set image deployment/devopsapp-deployment devopsapp=$ACR_NAME.azurecr.io/$IMAGE_NAME:${{ needs.build-and-push.outputs.tag }}  #Το deployment λέγεται devopsapp-deployment,έτσι το έχω ορίσει στο deployment.yml
 
+          kubectl rollout status deployment/devopsapp-deployment
  
         
   
