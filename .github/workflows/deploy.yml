@@ -41,7 +41,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Generate image tag
-        id: meta
+        id: meta            #δίνω όνομα στο step,παιρνάω το image tag στο deploy job και από εκεί στο kubectl
         run: echo "tag=${GITHUB_SHA}" >> $GITHUB_OUTPUT
 
       - name: Build Docker image
