@@ -1,3 +1,5 @@
+#Φτιάχνω το deploy.yml με χρήση OIDC secrets
+
 name: Build, Push and Deploy to AKS
 
 on:
@@ -5,6 +7,14 @@ on:
   push:
     branches:
       - main
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:                #Για την αποφυγή του να τρέχουν 2 deploy ταυτόχρονα
+  group: aks-deploy
+  cancel-in-progress: true
 
 env:
   ACR_NAME: myacr11047
@@ -16,43 +26,56 @@ jobs:
   build-and-push:
     if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.meta.outputs.tag }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Azure Login
+      - name: Azure Login (OIDC)
         uses: azure/login@v3
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}  #secrets context
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Generate image tag
+        id: meta
+        run: echo "tag=${GITHUB_SHA}" >> $GITHUB_OUTPUT
 
       - name: Build Docker image
         run: |
-          docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:latest ./devopsapp  #το $ACR_NAME και $IMAGE_NAME είναι environment variables
-
-      - name: Login to ACR
-        run: |
-          az acr login --name $ACR_NAME
+          docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:${{ steps.meta.outputs.tag }} ./devopsapp
 
       - name: Push image to ACR
         run: |
-          docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:latest
+          az acr login --name $ACR_NAME
+          docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:${{ steps.meta.outputs.tag }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+
+    steps:
+      - name: Azure Login (OIDC)
+        uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Set AKS context
         uses: azure/aks-set-context@v3
         with:
-          resource-group: ${{env.AKS_RESOURCE_GROUP}}  #env context για να πάρω τις variables που όρισα στο workflow-level
-          cluster-name: ${{env.AKS_CLUSTER_NAME}}      #env context για να πάρω τις variables που όρισα στο workflow-level
+          resource-group: ${{ env.AKS_RESOURCE_GROUP }}
+          cluster-name: ${{ env.AKS_CLUSTER_NAME }}
 
       - name: Deploy to AKS
         run: |
-          kubectl apply -f k8s/deployment.yml
-          kubectl apply -f k8s/service.yml
-
-        
-        
-        
-        
+          kubectl set image deployment/$IMAGE_NAME $IMAGE_NAME=$ACR_NAME.azurecr.io/$IMAGE_NAME:${{ needs.build-and-push.outputs.tag }}
+ 
         
   
   
